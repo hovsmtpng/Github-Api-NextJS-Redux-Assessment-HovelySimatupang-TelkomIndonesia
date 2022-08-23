@@ -51,8 +51,6 @@ export default function Index() {
     setshowRepo(true)
   })
   
-
-  console.log("formInput",formInput)
   useEffect(async () => {
     if(isSearch){
       setLoading(true)
@@ -71,7 +69,7 @@ export default function Index() {
     }
   },[isSearch, setLoading, formInput, userGithub, usernames])
 
-  // if(isLoading) return <LoadingScreen/>
+  if(isLoading) return <LoadingScreen/>
 
   return (
     <>
@@ -81,8 +79,16 @@ export default function Index() {
         maxWidth: '100%',
       }}
       >
-        <Typography align="center" variant="h4" gutterBottom>
+        <Typography align="center" variant="h4" gutterBottom
+          style={{
+              paddingTop:'20px',
+              fontWeight:'bold' // this does the magic
+          }}
+        >
           Github Repository
+        </Typography>
+        <Typography align="center" variant="h6" gutterBottom>
+          Next JS, Redux, Axios & Material UI
         </Typography>
       </Box>
 
@@ -92,9 +98,14 @@ export default function Index() {
         maxWidth: '100%',
       }}
       >
-      <Stack direction="row" spacing={2}>
-        <Button size="small" variant="contained" color="info" align="center" onClick={() => setModalVisible(true)}>Search User</Button>
-      </Stack>
+        <Grid item xs={12} sm={12} md={4} lg={4}
+            style={{
+                paddingTop:'15px',
+                textAlign:'center' // this does the magic
+            }}
+        >
+        <Button size="large" variant="contained" color="info" align="center" onClick={() => setModalVisible(true)}>Search User</Button>
+        </Grid>
       <SearchOverlay
         open={modalVisible}
         setOpen={setModalVisible}
