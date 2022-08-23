@@ -8,7 +8,6 @@ const userState = {
 }
 
 const userReducer = (state = userState, action) => {
-    console.log(action)
     switch(action.type) {
         case actionTypes.GET_USER:
             return {
@@ -28,7 +27,7 @@ const userReducer = (state = userState, action) => {
                 ...state,
                 isUserLoading : false,
                 isError: true,
-                error: { from: 'GET USER', message: action.payload },
+                error: { from: 'UserReducer', message: action.payload },
             }
         default:
             return state;
