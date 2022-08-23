@@ -6,8 +6,11 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 
 import SearchOverlay from "./components/SearchOverlay";
+import GUserProfile from "./components/GithubUserProfile/UserProfile";
+import RepositoryCard from "./components/Repository/Repository";
 
 import Typography from '@mui/material/Typography';
 
@@ -20,14 +23,13 @@ export default function Index() {
 
   const dispatch = useDispatch();
 
-  const user = useSelector(state => state.user.user);
-
-  console.log(user)
+  const user = useSelector(state => state);
+  const dataUser = user.user.user || "";
 
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [isSearch, setSearch] = useState(false);
-  const [userGithub, setuserGithub] = useState([]);
+  const [userGithub, setuserGithub] = useState({});
 
   const [formInput, setformInput] = useState('')
 
@@ -53,8 +55,8 @@ export default function Index() {
     if(isSearch){
       setLoading(true)
       const res = await getUser(formInput)
-      setuserGithub([res])
-      if(userGithub.length){
+      setuserGithub(res)
+      if(userGithub){
           dispatch(userGet(userGithub))
       }
       setLoading(false) 
@@ -66,7 +68,8 @@ export default function Index() {
   // if(isLoading) return <LoadingScreen/>
 
   return (
-    <Container maxWidth="lg">
+    <>
+    <Container maxWidth="md">
       <Box
       sx={{
         maxWidth: '100%',
@@ -79,7 +82,7 @@ export default function Index() {
 
       <Box
       sx={{
-        width: 500,
+        // width: 500,
         maxWidth: '100%',
       }}
       >
@@ -98,15 +101,28 @@ export default function Index() {
         isSearch={isSearch}
 
       />
-      {user && (
-        user.map((user) => (
-          <>
-            <span key={user.id}>{user.login}</span>
-            <span key={user.id}>{user.public_repos}</span>
-          </>
-        ))
-      )}
     </Box>
     </Container>
+    <Container>
+
+    {dataUser.id && (
+        <>
+        <GUserProfile 
+        data={dataUser}
+        // OpenRepoFunction={OpenListRepo}
+        />
+        <Box sx={{ flexGrow: 1 }}>
+          {/* <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+            {repository.map((data) => (
+              <Grid item xs={2} sm={4} md={4} key={data}>
+              <RepositoryCard repo={data}></RepositoryCard>
+            </Grid>
+            ))}
+          </Grid> */}
+        </Box>
+        </>
+      )}
+    </Container>
+    </>
   )
 }

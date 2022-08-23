@@ -4,7 +4,7 @@ const userState = {
     isUserLoading: false,
     isError: false,
     error: { from: '', message: '' },
-    user: []
+    user: {}
 }
 
 const userReducer = (state = userState, action) => {
