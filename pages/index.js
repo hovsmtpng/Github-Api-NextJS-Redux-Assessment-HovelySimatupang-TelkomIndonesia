@@ -101,6 +101,7 @@ export default function Index() {
         <Grid item xs={12} sm={12} md={4} lg={4}
             style={{
                 paddingTop:'15px',
+                paddingBottom:'15px',
                 textAlign:'center' // this does the magic
             }}
         >
@@ -129,7 +130,11 @@ export default function Index() {
         OpenRepoFunction={ShowListRepo}
         />
         {dataRepos && showRepo && (
-          <Box sx={{ flexGrow: 1 }}>
+          <Box sx={{ flexGrow: 1 }}
+          style={{
+            paddingBottom:'20px',
+          }}
+        >
           <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
             {dataRepos.map((data) => (
               <Grid item xs={2} sm={4} md={4} key={data}>

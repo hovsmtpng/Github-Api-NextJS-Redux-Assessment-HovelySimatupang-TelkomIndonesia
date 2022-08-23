@@ -1,4 +1,4 @@
-// import '../styles/globals.css'
+import '../styles/globals.css'
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Provider } from 'react-redux'
