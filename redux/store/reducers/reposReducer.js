@@ -20,14 +20,14 @@ const reposReducer = (state = reposState, action) => {
                 isUserLoading: false,
                 isError: false,
                 error: { from: '', message: '' },
-                user: action.payload
+                repos: action.payload
             }
         case actionTypes.REPOS_NOT_FOUND:
             return {
                 ...state,
                 isUserLoading : false,
                 isError: true,
-                error: { from: 'GET REPOSITORY', message: action.payload },
+                error: { from: 'reposReducer', message: action.payload },
             }
         default:
             return state;

@@ -15,7 +15,10 @@ import RepositoryCard from "./components/Repository/Repository";
 import Typography from '@mui/material/Typography';
 
 import { getUser } from '../api/getUser';
+import { getRepos } from '../api/getRepos';
+
 import { userGet } from '../redux/store/actions/userAction'
+import { repositoryGet } from '../redux/store/actions/reposAction'
 
 import { LoadingScreen } from './components/loadingScreen';
 
@@ -26,10 +29,16 @@ export default function Index() {
   const user = useSelector(state => state);
   const dataUser = user.user.user || "";
 
+  const repos = useSelector(state => state);
+  const dataRepos = repos.repos.repos || "";
+
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [isSearch, setSearch] = useState(false);
   const [userGithub, setuserGithub] = useState({});
+  const [usernames, setUsernames] = useState(false)
+
+  const [showRepo, setshowRepo] = useState('')
 
   const [formInput, setformInput] = useState('')
 
@@ -38,32 +47,29 @@ export default function Index() {
       setformInput(value)
   }, [setformInput])
 
-  // const fetchuserGithub = async() => {
-  //     // console.log(formInput)
-  //     const res = await getUser(formInput)
-  //     setuserGithub([res])
-  //     if(userGithub.length){
-  //         dispatch(userGet(userGithub))
-  //     }
-  //     setLoading(false) 
-  //     // setSearch(false)
-  // }
+  const ShowListRepo = useCallback(()=> {
+    setshowRepo(true)
+  })
+  
 
   console.log("formInput",formInput)
   useEffect(async () => {
-    console.log("isSearch",isSearch)
     if(isSearch){
       setLoading(true)
       const res = await getUser(formInput)
       setuserGithub(res)
+      setUsernames(res.login)
       if(userGithub){
           dispatch(userGet(userGithub))
+          if(usernames){
+            dispatch(repositoryGet(usernames))
+          }
       }
       setLoading(false) 
       setSearch(false)
       setModalVisible(false)
     }
-  },[isSearch, setLoading, formInput, userGithub])
+  },[isSearch, setLoading, formInput, userGithub, usernames])
 
   // if(isLoading) return <LoadingScreen/>
 
@@ -109,17 +115,19 @@ export default function Index() {
         <>
         <GUserProfile 
         data={dataUser}
-        // OpenRepoFunction={OpenListRepo}
+        OpenRepoFunction={ShowListRepo}
         />
-        <Box sx={{ flexGrow: 1 }}>
-          {/* <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-            {repository.map((data) => (
+        {dataRepos && showRepo && (
+          <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+            {dataRepos.map((data) => (
               <Grid item xs={2} sm={4} md={4} key={data}>
               <RepositoryCard repo={data}></RepositoryCard>
             </Grid>
             ))}
-          </Grid> */}
+          </Grid>
         </Box>
+        )}
         </>
       )}
     </Container>

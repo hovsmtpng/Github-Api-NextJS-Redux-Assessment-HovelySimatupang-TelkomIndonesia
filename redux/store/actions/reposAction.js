@@ -4,14 +4,14 @@ import axios from 'axios'
 
 const url = "https://api.github.com";
 
-export const repositoryGet = (user) => async dispatch => {
+export const repositoryGet = (username) => async dispatch => {
     try {
-      dispatch({ type: actionTypes.GET_REPOS });
+      dispatch({ type: actionTypes.REPOS_FOUND });
   
-      const response = await axios.get(`${url}/users/${user.login}/repos`)
+      const response = await axios.get(`${url}/users/${username}/repos`)
   
       dispatch({
-        type: actionTypes.GET_REPOS,
+        type: actionTypes.REPOS_FOUND,
         payload: response.data,
       });
   
