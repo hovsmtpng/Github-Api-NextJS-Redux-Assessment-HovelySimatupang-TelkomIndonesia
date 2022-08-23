@@ -1,22 +1,16 @@
-import { GET_USER, USER_FOUND, USER_NOT_FOUND } from '../actionTypes'
+import { actionTypes } from '../../actionTypes'
 
-import axios from 'axios'
-
-const url = "https://api.github.com";
-
-export const userGet = (username) => async dispatch => {
+export const userGet = (user) => async dispatch => {
     try {
-      dispatch({ type: GET_USER });
-  
-      const response = await axios.get(`${url}/users/${username}`)
+      dispatch({ type: actionTypes.USER_FOUND });
   
       dispatch({
-        type: GET_USER,
-        payload: response.data,
+        type: actionTypes.USER_FOUND,
+        payload: user,
       });
   
     } catch (error) {
-      dispatch({ type: USER_NOT_FOUND, payload: error.message });
+      dispatch({ type: actionTypes.USER_NOT_FOUND, payload: error.message });
       // router.push('/500')
     }
   };

@@ -1,4 +1,4 @@
-import { GET_REPOS, REPOS_FOUND, REPOS_NOT_FOUND } from '../actionTypes'
+import { actionTypes } from '../../actionTypes'
 
 const reposState = {
     isReposLoading: false,
@@ -9,12 +9,12 @@ const reposState = {
 
 const reposReducer = (state = reposState, action) => {
     switch(action.type) {
-        case GET_REPOS:
+        case actionTypes.GET_REPOS:
             return {
                 ...state,
                 isUserLoading : true
             }
-        case REPOS_FOUND:
+        case actionTypes.REPOS_FOUND:
             return {
                 ...state,
                 isUserLoading: false,
@@ -22,7 +22,7 @@ const reposReducer = (state = reposState, action) => {
                 error: { from: '', message: '' },
                 user: action.payload
             }
-        case REPOS_NOT_FOUND:
+        case actionTypes.REPOS_NOT_FOUND:
             return {
                 ...state,
                 isUserLoading : false,

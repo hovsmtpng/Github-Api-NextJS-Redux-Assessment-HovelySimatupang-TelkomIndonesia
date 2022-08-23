@@ -12,15 +12,25 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
 import Typography from '@mui/material/Typography';
+import { getUser } from '../api/getUser';
 
 export default function Index() {
+  
   const dispatch = useDispatch();
-  const [user, setUser] = useState([]);
+  const user = useSelector(state => state);
+  
+  const [userGithub, setuserGithub] = useState([]);
 
+  const fetchuserGithub = async() => {
+    const res = await getUser('hovsmtpng')
+    setuserGithub([res])
+    if(userGithub.length){
+      dispatch(userGet(userGithub))
+    }
+  }
   useEffect(()=>{
-    dispatch(userGet('hovsmtpng'));
-  })
-
+    fetchuserGithub()
+  },[])
   return (
     <Container maxWidth="lg">
       <Box

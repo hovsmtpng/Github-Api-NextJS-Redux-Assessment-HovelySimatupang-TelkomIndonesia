@@ -1,4 +1,4 @@
-import { GET_USER, USER_FOUND, USER_NOT_FOUND } from '../actionTypes'
+import { actionTypes } from '../../actionTypes'
 
 const userState = {
     isUserLoading: false,
@@ -8,13 +8,14 @@ const userState = {
 }
 
 const userReducer = (state = userState, action) => {
+    console.log(action)
     switch(action.type) {
-        case GET_USER:
+        case actionTypes.GET_USER:
             return {
                 ...state,
                 isUserLoading : true
             }
-        case USER_FOUND:
+        case actionTypes.USER_FOUND:
             return {
                 ...state,
                 isUserLoading: false,
@@ -22,7 +23,7 @@ const userReducer = (state = userState, action) => {
                 error: { from: '', message: '' },
                 user: action.payload
             }
-        case USER_NOT_FOUND:
+        case actionTypes.USER_NOT_FOUND:
             return {
                 ...state,
                 isUserLoading : false,
